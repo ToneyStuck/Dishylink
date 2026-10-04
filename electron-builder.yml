@@ -3,8 +3,8 @@
 # inlined at build time, so no node_modules ships. Developer ID signing needs a
 # paid Apple account, which this project doesn't have; identity:null tells
 # electron-builder to skip signing rather than hunt for a certificate and fail.
-appId: com.dishylink.app
-productName: Dishylink
+appId: com.toneystuck.dishylink.fork
+productName: Dishylink Community Fork
 copyright: © 2026 daveyhert
 
 # Ad-hoc sign the built .app so macOS will post notifications (an unsigned build
@@ -25,8 +25,8 @@ directories:
 # an installed app has no credential to authenticate a private-repo download.
 publish:
   provider: github
-  owner: DaveyHert
-  repo: dishylink
+  owner: ToneyStuck
+  repo: Dishylink
   releaseType: draft
 
 # Only the built app ships. The build/*.png icons are named explicitly because
@@ -45,6 +45,8 @@ files:
   - build/trayTemplateOutline.png
   - build/trayTemplateOutline@2x.png
   - package.json
+  - LICENSE
+  - DISCLAIMER.md
   - "!node_modules/**/*"
 
 # Two per-arch DMGs rather than one universal build. Without an explicit arch list
