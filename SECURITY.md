@@ -3,12 +3,12 @@
 ## Reporting a vulnerability
 
 Do not post vulnerabilities, account sessions, tokens, or other sensitive details
-in public issues. If GitHub private vulnerability reporting is enabled for
-[ToneyStuck/Dishylink](https://github.com/ToneyStuck/Dishylink/security), use its
-**Report a vulnerability** option. This policy does not confirm that it is enabled.
+in public issues. Use **Report a vulnerability** on this fork's
+[Security tab](https://github.com/ToneyStuck/Dishylink/security/advisories/new)
+to send a private report to the fork maintainer.
 
-No separate private contact is listed for this fork. If GitHub private reporting
-is unavailable, do not publish sensitive details while seeking a private channel.
+No separate private email contact is listed for this fork. If GitHub private
+reporting is unavailable, do not publish sensitive details while seeking a private channel.
 Ordinary bugs belong in [fork Issues](https://github.com/ToneyStuck/Dishylink/issues)
 with private data removed.
 
