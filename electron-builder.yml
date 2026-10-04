@@ -3,8 +3,8 @@
 # inlined at build time, so no node_modules ships. Developer ID signing needs a
 # paid Apple account, which this project doesn't have; identity:null tells
 # electron-builder to skip signing rather than hunt for a certificate and fail.
-appId: com.dishylink.app
-productName: Dishylink
+appId: com.toneystuck.dishylink.fork
+productName: Dishylink Community Fork
 copyright: © 2026 daveyhert
 
 # Ad-hoc sign the built .app so macOS will post notifications (an unsigned build
@@ -25,8 +25,8 @@ directories:
 # an installed app has no credential to authenticate a private-repo download.
 publish:
   provider: github
-  owner: DaveyHert
-  repo: dishylink
+  owner: ToneyStuck
+  repo: Dishylink
   releaseType: draft
 
 # Only the built app ships. The build/*.png icons are named explicitly because
@@ -45,6 +45,8 @@ files:
   - build/trayTemplateOutline.png
   - build/trayTemplateOutline@2x.png
   - package.json
+  - LICENSE
+  - DISCLAIMER.md
   - "!node_modules/**/*"
 
 # Two per-arch DMGs rather than one universal build. Without an explicit arch list
@@ -82,15 +84,9 @@ mac:
 win:
   artifactName: ${productName}-${version}-${arch}.${ext}
   target:
-    # nsis is the standard assisted installer .exe, built for both Windows
-    # architectures: x64 (the near-universal Intel/AMD desktop) and arm64 (Windows
-    # on ARM — Surface Pro X, Snapdragon/Copilot+ laptops). ARM machines can run the
-    # x64 build under emulation, so the native arm64 installer is the faster path
-    # for them rather than a gap being closed. Nothing here is compiled per-arch —
-    # vite inlines every dependency and the tree has no native modules — so the
-    # second arch costs only its own Electron download at build time.
+    # Fork previews currently ship Windows x64 only.
     - target: nsis
-      arch: [x64, arm64]
+      arch: [x64]
   # The runtime PNG doubles as the packaging icon. electron-builder converts it to a
   # multi-resolution .ico itself; only its *ICNS* writer is the buggy one that forced
   # the prebuilt-icns dance on macOS above — its ICO writer is fine, so no per-format

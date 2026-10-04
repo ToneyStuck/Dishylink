@@ -1,6 +1,23 @@
 # Changelog
 
-All notable changes to Dishylink are documented here.
+Fork changes appear first. The original upstream release history follows.
+
+## Fork - Unreleased
+
+- Keep completed telemetry buckets stable and add satellite hardware models,
+  dome-aware beams, and local sky views. Existing PR references remain in git history.
+- Carry over desktop isolation from `desktop/test-installer`: a separate app name,
+  app ID, and fork release target, with LICENSE and DISCLAIMER.md in packaged apps.
+- Separate fork downloads and support from upstream links. Guard landing deployment
+  against fork runs and keep fork release packaging limited to Windows x64 previews.
+
+## [1.2.0-fork.1] - 2026-10-04
+
+- Publish an unsigned Windows x64 desktop preview with a separate fork identity.
+  [Download the prerelease](https://github.com/ToneyStuck/Dishylink/releases/tag/v1.2.0-fork.1).
+  Updates are manual; this release has no updater metadata.
+
+## Upstream releases
 
 ## [1.2.0] - 2026-09-18
 

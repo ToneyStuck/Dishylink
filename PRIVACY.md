@@ -56,4 +56,10 @@ explicit opt-in.
 
 ## Contact
 
-Questions about this policy: hello@dishylink.com
+For non-sensitive questions about this fork's policy, use
+[ToneyStuck/Dishylink Issues](https://github.com/ToneyStuck/Dishylink/issues).
+Do not include account sessions, tokens, or private diagnostics in public posts.
+Use [SECURITY.md](SECURITY.md) for vulnerability reporting.
+
+The original project's contact, hello@dishylink.com, belongs to upstream and is
+not a contact for this fork.

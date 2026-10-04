@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.repository == 'DaveyHert/Dishylink'
     runs-on: ubuntu-latest
     defaults:
       run:

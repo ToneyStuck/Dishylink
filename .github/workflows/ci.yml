@@ -64,8 +64,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          # Two commits, so a push can be diffed against what it replaced.
-          fetch-depth: 2
+          # PR bases and multi-commit pushes need the full comparison history.
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -88,7 +88,7 @@ jobs:
             exit 0
           fi
           changed=$(git diff --name-only --diff-filter=ACMR "$base" HEAD \
-            -- '*.ts' '*.tsx' '*.mts' '*.mjs' '*.js' '*.json' '*.css' '*.md' || true)
+            -- '*.ts' '*.tsx' '*.mts' '*.mjs' '*.js' '*.json' '*.css' '*.md' '*.yml' '*.yaml')
           if [ -z "$changed" ]; then
             echo "No formattable files changed."
             exit 0
@@ -125,7 +125,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run pack:win
+      - if: github.repository != 'ToneyStuck/Dishylink'
+        run: npm run pack:win
+      - if: github.repository == 'ToneyStuck/Dishylink'
+        run: npm run pack:win -- --x64
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
       - uses: actions/upload-artifact@v4
         with:
           name: dishylink-windows-installer

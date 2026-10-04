@@ -1,7 +1,6 @@
-# Builds and publishes a draft GitHub Release when a v* tag is pushed. Draft,
-# not published: electron-updater ignores drafts, so installed apps see nothing
-# until someone clicks "Publish release" on GitHub — that click is the actual
-# rollout, on demand, separate from when this workflow runs.
+# Creates draft releases on matching version tags or manual runs.
+# Fork releases contain only an unsigned Windows x64 installer, no update feed.
+# Upstream retains its desktop update metadata and extension archives.
 name: Release
 
 on:
@@ -19,6 +18,7 @@ permissions:
 
 jobs:
   prepare:
+    if: github.repository == 'DaveyHert/Dishylink' || github.repository == 'ToneyStuck/Dishylink'
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.resolve.outputs.tag }}
@@ -36,15 +36,47 @@ jobs:
             exit 1
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Verify publishing targets this repository
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          // Fail closed if the literal publish block changes shape.
+          const config = fs.readFileSync('electron-builder.yml', 'utf8').replace(/\r\n/g, '\n');
+          const publish = config.match(/^publish:\n((?:  .+\n)+)/m)?.[1] ?? '';
+          const owner = publish.match(/^  owner: ([A-Za-z0-9_.-]+)$/m)?.[1];
+          const repo = publish.match(/^  repo: ([A-Za-z0-9_.-]+)$/m)?.[1];
+          const target = `${owner}/${repo}`;
+          if (target.toLowerCase() !== process.env.GITHUB_REPOSITORY.toLowerCase()) {
+            throw new Error(`Publish target ${target} differs from ${process.env.GITHUB_REPOSITORY}`);
+          }
+          if (process.env.GITHUB_REPOSITORY.toLowerCase() === 'toneystuck/dishylink') {
+            const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            if (!version.includes('-fork.')) throw new Error('Fork releases require a fork prerelease version');
+          }
+          NODE
       - name: Create the draft release unless it already exists
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="${{ steps.resolve.outputs.tag }}"
-          gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
-            || gh release create "$tag" --repo "$GITHUB_REPOSITORY" --draft --title "$tag" --notes ""
+          if [ "${GITHUB_REPOSITORY,,}" = "toneystuck/dishylink" ]; then
+            if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              draft=$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
+              if [ "$draft" != "true" ]; then
+                echo "::error::Refusing to replace assets on published fork release $tag; use a new version"
+                exit 1
+              fi
+              gh release edit "$tag" --repo "$GITHUB_REPOSITORY" --prerelease
+            else
+              gh release create "$tag" --repo "$GITHUB_REPOSITORY" --draft --prerelease --title "$tag" --notes ""
+            fi
+          else
+            gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+              || gh release create "$tag" --repo "$GITHUB_REPOSITORY" --draft --title "$tag" --notes ""
+          fi
 
   release-mac:
+    if: github.repository == 'DaveyHert/Dishylink'
     needs: prepare
     runs-on: macos-latest
     steps:
@@ -71,11 +103,30 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run release:win
+      - if: github.repository == 'DaveyHert/Dishylink'
+        run: npm run release:win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - if: github.repository == 'ToneyStuck/Dishylink'
+        name: Package unsigned fork preview without publishing metadata
+        run: npm run pack:win -- --x64
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - if: github.repository == 'ToneyStuck/Dishylink'
+        name: Attach installer only to draft prerelease
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+        run: |
+          $draft = gh release view $env:RELEASE_TAG --repo $env:GITHUB_REPOSITORY --json isDraft --jq .isDraft
+          if ($LASTEXITCODE -ne 0 -or $draft -ne 'true') { throw 'Fork release must still be a draft' }
+          $installers = @(Get-ChildItem release/*-x64.exe)
+          if ($installers.Count -ne 1) { throw 'Expected one Windows x64 installer' }
+          gh release upload $env:RELEASE_TAG $installers[0].FullName --clobber --repo $env:GITHUB_REPOSITORY
+          if ($LASTEXITCODE -ne 0) { throw 'Installer upload failed' }
 
   release-extension:
+    if: github.repository == 'DaveyHert/Dishylink'
     needs: prepare
     runs-on: ubuntu-latest
     steps:

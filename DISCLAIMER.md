@@ -1,5 +1,9 @@
 # Disclaimer
 
+This repository is ToneyStuck's fork of Dishylink by DaveyHert. Fork builds and
+support are separate from upstream. The published fork installer is an unsigned
+Windows x64 preview, provided without a stability or support guarantee.
+
 Dishylink is an independent, community-built project. It is **not affiliated
 with, endorsed by, or sponsored by SpaceX, Starlink, or any of their
 affiliates.** "Starlink" and any related marks are the property of their
@@ -31,4 +35,9 @@ software, including any disruption to your Starlink service.
 
 ## Contact
 
-hello@dishylink.com
+Ordinary fork bugs belong in
+[ToneyStuck/Dishylink Issues](https://github.com/ToneyStuck/Dishylink/issues).
+Remove private data before posting. Follow [SECURITY.md](SECURITY.md) for
+vulnerabilities; do not post sensitive details publicly.
+
+hello@dishylink.com is the original upstream project's contact, not this fork's.

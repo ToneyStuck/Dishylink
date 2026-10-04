@@ -1,4 +1,17 @@
-# <img src="docs/logo.svg" alt="" width="34" height="34" align="top"> Dishylink
+# <img src="docs/logo.svg" alt="" width="34" height="34" align="top"> Dishylink Community Fork
+
+This is [ToneyStuck's fork](https://github.com/ToneyStuck/Dishylink) of
+[Dishylink by DaveyHert](https://github.com/DaveyHert/dishylink). It includes
+stable telemetry buckets and satellite models with local sky views. The original
+MIT license, copyright, and project attribution remain intact.
+
+The only published fork download is the
+[Windows x64 preview, v1.2.0-fork.1](https://github.com/ToneyStuck/Dishylink/releases/tag/v1.2.0-fork.1).
+It is unsigned. No fork macOS, Windows ARM64, or browser-store builds are available.
+This source branch includes changes made after that preview.
+
+The badges below link to upstream releases and the original author's profiles,
+not fork downloads or fork support.
 
 [![Downloads](https://img.shields.io/github/downloads/DaveyHert/dishylink/total.svg)](https://github.com/DaveyHert/dishylink/releases)
 [![macOS](https://img.shields.io/badge/macOS-12.0+-black.svg)](https://github.com/DaveyHert/dishylink/releases/latest)
@@ -24,7 +37,21 @@ your plan and billing figures and enables supported router controls such as
 pausing connected devices. Your session remains stored locally and is sent
 only to Starlink.
 
-## <img src="docs/platforms/download.svg" alt="" width="22" height="22" align="top"> Download
+## Fork download
+
+Download the unsigned Windows x64 installer from the
+[v1.2.0-fork.1 prerelease](https://github.com/ToneyStuck/Dishylink/releases/tag/v1.2.0-fork.1).
+Windows may show an unknown-publisher warning. Verify the release and its source
+before deciding whether to run it.
+
+The fork uses a separate desktop app ID and data directory from upstream.
+History and account sessions are not migrated automatically. Updates require
+manually downloading and running a new installer. This preview has no updater
+metadata, so in-app update detection cannot announce its replacements.
+
+## Upstream downloads and stores
+
+These are DaveyHert's original builds and store listings, not this fork.
 
 | Platform                                                                                     | Format    | Architecture           |                                                                                                                                                          |
 | :------------------------------------------------------------------------------------------- | :-------- | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -39,8 +66,8 @@ only to Starlink.
 
 [latest]: https://github.com/DaveyHert/dishylink/releases/latest
 
-Not sure which to pick? On Windows, take Universal. On macOS, take `arm64` for
-Apple silicon (M1 and later) or `x64` for Intel.
+For upstream builds, choose Universal on Windows, or `arm64` for Apple silicon
+(M1 and later) and `x64` for Intel on macOS. The fork preview is Windows x64 only.
 
 ## Features
 
@@ -129,10 +156,13 @@ Meter any device on your network and pause it automatically when it goes over.
 
 ## Three ways to run it in dev
 
-Dishylink ships as three independent products from one codebase. To run any of
-them from source:
+The upstream codebase supports desktop, browser development, and extensions.
+These source installation paths also work in this fork; they do not imply that
+fork binaries or store packages have been published.
 
 ```bash
+git clone https://github.com/ToneyStuck/Dishylink.git
+cd Dishylink
 npm install
 
 npm run dev              # web harness on localhost:5173
@@ -212,11 +242,13 @@ A fresh desktop build opens with no history by design: it fills up as it runs.
   happen while nobody is looking.
 - Native OS notifications for alerts when the window isn't in front, throttled
   so a flapping link can't spam.
-- Auto-updates, and remembers its window position across runs and displays.
+- Detects updates when release metadata is available; it does not download or
+  install them automatically. The fork preview requires manual updates.
+- Remembers its window position across runs and displays.
 
 ### Browser extension (Chrome, Edge, Firefox)
 
-Install it from the
+The original upstream extension is available from the
 [Chrome Web Store](https://chromewebstore.google.com/detail/dishylink/pljgamnkfokhbchiiommnblkjffffnna),
 [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/pknccegejhlgmeiojalenedmkbcaimdo)
 or [Firefox Add-ons](https://addons.mozilla.org/addon/dishylink/).
@@ -292,6 +324,15 @@ range reports what fraction of it was actually sampled. See
 
 Everything above is local-only by design: your telemetry, your history, your
 storage, never transmitted.
+
+## Support
+
+Report ordinary fork bugs in
+[ToneyStuck/Dishylink Issues](https://github.com/ToneyStuck/Dishylink/issues).
+Remove account sessions, tokens, device identifiers, and other private data from
+logs before sharing them. For vulnerabilities, follow [SECURITY.md](SECURITY.md);
+do not post sensitive details publicly. Upstream store listings and author links
+are not fork support channels.
 
 ## License
 

@@ -37,12 +37,17 @@ bad write there can take the WiFi down until a physical reset.
 
 ## Running it
 
+These are source development paths, not published fork downloads. Clone the fork:
+
 ```bash
+git clone https://github.com/ToneyStuck/Dishylink.git
+cd Dishylink
 npm install
 
-npm run dev             # web dev harness — requires being on the Starlink LAN
-npm run dev:electron    # desktop app (macOS, Windows)
-npm run dev:extension   # browser extension (Chrome, Edge, Firefox)
+npm run dev              # web dev harness, requires the Starlink LAN
+npm run dev:electron     # desktop app (macOS, Linux)
+npm run dev:electron:win # desktop app (Windows)
+npm run dev:extension    # browser extension (Chrome, Edge, Firefox)
 ```
 
 The three products are independent: they don't share a runtime, and each polls
@@ -85,21 +90,31 @@ npm version minor        # bumps package.json, commits, and tags
 git push --follow-tags
 ```
 
-Pushing a `v*` tag builds macOS, Windows and the extension archives, and creates
-a **draft** release. Nothing reaches users until the draft is published on
-GitHub — installed apps ignore drafts, so that click is the actual rollout.
+The commands above are the original upstream release path, not instructions to
+publish this fork's preview. Fork maintainers must choose a new prerelease version
+and tag deliberately, keeping `package.json` and lockfile metadata in sync.
 
-The tag must match `package.json`'s version; CI fails fast if it doesn't, which
-is why `npm version` is the right way to bump rather than editing by hand.
+In ToneyStuck/Dishylink, the release workflow packages only an unsigned Windows
+x64 installer into a draft prerelease. It does not upload updater metadata or
+replace assets on a published release. Preview users update manually. Other
+repositories cannot run its release jobs; the original DaveyHert/Dishylink path
+still builds macOS, Windows, and extension archives.
+
+The tag must match `package.json`'s version. Fork publishing must also target
+ToneyStuck/Dishylink in `electron-builder.yml`. Publishing a draft is a separate
+maintainer action. No workflow deploys this fork to an STB, and landing deployment
+is restricted to the original upstream repository.
 
 ## Reporting problems
 
-Open an issue with your dish and router firmware versions, the platform you're
-on, and the output of **Copy debug data** from the settings panel where it's
-relevant — it bundles diagnostics, status and config as JSON.
+Open an issue in [fork Issues](https://github.com/ToneyStuck/Dishylink/issues)
+with firmware versions, platform, and relevant diagnostics. **Copy debug data**
+includes status and config as JSON; review it and remove account sessions, tokens,
+device identifiers, and other private data before sharing.
 
-If you believe you've found a security issue, please report it privately through
-the repository's security tab rather than opening a public issue.
+For vulnerabilities, follow [SECURITY.md](SECURITY.md). Use GitHub private
+reporting only if enabled; if unavailable, do not post sensitive details publicly.
+Upstream contacts and store listings are not fork support channels.
 
 ## Thank you
 

@@ -64,7 +64,7 @@ const trayOutlinePath = join(here, "../build/trayTemplateOutline.png");
 
 // Drives the menu-bar title and per-app data directory; must be set before anything
 // reads it.
-app.setName("Dishylink");
+app.setName("Dishylink Community Fork");
 
 // Must run before the app is ready, so it's at module load rather than in whenReady.
 registerAppProtocolScheme();

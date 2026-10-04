@@ -2,22 +2,28 @@
 
 ## Reporting a vulnerability
 
-Please report security issues privately rather than opening a public issue. Use
-the **Report a vulnerability** button on this repository's
-[Security tab](https://github.com/DaveyHert/Dishylink/security/advisories/new),
-which opens a private thread visible only to you and the maintainer. If you
-would rather use email, **hello@dishylink.com** reaches the same place.
+Do not post vulnerabilities, account sessions, tokens, or other sensitive details
+in public issues. If GitHub private vulnerability reporting is enabled for
+[ToneyStuck/Dishylink](https://github.com/ToneyStuck/Dishylink/security), use its
+**Report a vulnerability** option. This policy does not confirm that it is enabled.
 
-Include what you found, how to reproduce it, which platform you were on, and the
-version of Dishylink you were running.
+No separate private contact is listed for this fork. If GitHub private reporting
+is unavailable, do not publish sensitive details while seeking a private channel.
+Ordinary bugs belong in [fork Issues](https://github.com/ToneyStuck/Dishylink/issues)
+with private data removed.
 
-Reports are read and answered on a best effort basis by a single maintainer.
-Please allow a reasonable window for a fix before sharing details publicly.
+A private report should include reproduction steps, platform, and app version.
+There is no guaranteed response time. Allow time for a fix before public disclosure.
+
+For vulnerabilities in the original upstream project, consult
+[upstream's security policy](https://github.com/DaveyHert/Dishylink/blob/master/SECURITY.md).
+Its contacts belong to upstream, not this fork.
 
 ## Supported versions
 
-Fixes land in the latest published release. Older releases are not patched, so
-updating is the way to pick up a fix.
+This fork currently offers an unsigned Windows x64 preview, not a maintained
+stable release line. Fixes land in source first; a new installer requires a
+separate release. Preview updates are manual. Older previews are not promised patches.
 
 ## Scope
 
